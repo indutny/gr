@@ -69,22 +69,20 @@ The normalization for Fourier transforms is chosen such that:
 f(x) & = \int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \tilde{f}(p).
 \end{align}
 
-Heaviside step function $\Theta(x)$ is $1$ for $x > 0$ and $0$ otherwise.
-
 \subsection{Green's function}
 
 Our goal is to solve:
 \begin{equation}\label{eq:dalembert-eq}
-\square \Psi(x - y) = \eta^{\mu\nu} \partial_\mu \partial_\nu \Psi(x - y) = \delta^{(4)} (x - y)
+\square G(x - y) = \eta^{\mu\nu} \partial_\mu \partial_\nu G(x - y) = \delta^{(4)} (x - y)
 \end{equation}
-for $\Psi(x - y)$ (Note that $\partial_\mu$ here is $\frac{\partial}{\partial x^\mu}$).
+for $G(x - y)$ (Note that $\partial_\mu$ here is $\frac{\partial}{\partial x^\mu}$).
 The resulting function can be used to compute the solutions to more general differential equation:
 \begin{equation}\label{eq:general-eq}
 \square h(x) = T(x).
 \end{equation}
-Given the $\Psi(x - y)$ the reader can check that the solution to \eqref{eq:general-eq} is:
+Given the $G(x - y)$ the reader can check that the solution to \eqref{eq:general-eq} is:
 \begin{equation}
-h(x) = \int d^4y \; \Psi(x - y) T(y).
+h(x) = \int d^4y \; G(x - y) T(y).
 \end{equation}
 
 We wanted to be as explicit as possible in our solution. Thus it is our hope that the reader would forgive us the
@@ -94,32 +92,32 @@ excessive amount of steps.
 
 \subsection{Initial Steps}
 
-First of all, instead of solving for $\Psi(x - y)$ we could solve for $\Psi(x)$ and then shift the argument of the function
+First of all, instead of solving for $G(x - y)$ we could solve for $G(x)$ and then shift the argument of the function
 to get the end result. Substituting the Fourier transforms
 \begin{align}\label{eq:fourier-transform}
-\Psi(x) & = \int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \tilde{\Psi}(p) \\
+G(x) & = \int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \tilde{G}(p) \\
 \delta^{(4)} (x) & = \int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \cdot 1
 \end{align}
 into \eqref{eq:dalembert-eq} we get:
 \begin{align}\label{eq:fourier-step}
-\int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \left[ \eta^{\mu\nu} (-i p_\mu) (-i p_\nu) \tilde{\Psi}(p) - 1 \right] & = \\
-\int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \left[ -p^2 \tilde{\Psi}(p) - 1 \right] & = 0.
+\int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \left[ \eta^{\mu\nu} (-i p_\mu) (-i p_\nu) \tilde{G}(p) - 1 \right] & = \\
+\int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \left[ -p^2 \tilde{G}(p) - 1 \right] & = 0.
 \end{align}
 Thus
 \begin{equation}\label{eq:fourier-solution}
-\tilde{\Psi}(p) = -\frac{1}{p^2}
+\tilde{G}(p) = -\frac{1}{p^2}
 \end{equation}
 should in general solve \eqref{eq:fourier-step}. Plugging \eqref{eq:fourier-solution} back into
 \eqref{eq:fourier-transform} we see that
 \begin{equation}\label{eq:complex-integral}
-\Psi(x) = \int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \frac{1}{p^2}.
+G(x) = \int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \frac{1}{p^2}.
 \end{equation}
 
 Going to spherical coordinates for $\vec{p}$ and separating $p_0$ we get following integral:
 \begin{align}\label{eq:expanded-integral}
-& \int_0^{2 \pi} \frac{d \phi}{2 \pi} \int_{-1}^{1} \frac{d \cos{\theta}}{2 \pi} \int \frac{d |\vec{p}|}{2 \pi}
+& \int_0^{2 \pi} \frac{d \phi}{2 \pi} \int_{-1}^{1} \frac{d \cos{\theta}}{2 \pi} \int_0^\infty \frac{d |\vec{p}|}{2 \pi}
   \int \frac{d p_0}{2 \pi} |\vec{p}|^2 e^{i p \cdot x} \left( \cdots \right) = \\
-& \; \; \frac{1}{4 \pi^2} \int_{-1}^{1} d \cos{\theta} \int d |\vec{p}|
+& \; \; \frac{1}{4 \pi^2} \int_{-1}^{1} d \cos{\theta} \int_0^\infty d |\vec{p}|
   \int \frac{d p_0}{2 \pi} e^{i p \cdot x} |\vec{p}|^2 \left( \cdots \right)
 \end{align}
 and
@@ -200,5 +198,63 @@ $e^{i p_0 t}$ for negative $t$ and $p_0$ far on the positive imaginary axis) is:
 t < 0 : \eqref{eq:expanded-time} = \mp i \lim_{\epsilon \to 0} \frac{1}{2 |\vec{p}| \pm i \epsilon}
   e^{\mp i \left(|\vec{p}| \pm i \epsilon\right) t}.
 \end{equation}
+
+Combining \eqref{eq:time-solution-ret} and \eqref{eq:time-solution-adv} together:
+\begin{equation}\label{eq:time-part}
+\eqref{eq:expanded-time} = \mp i \lim_{\epsilon \to 0} \frac{1}{2 |\vec{p}| \pm i \epsilon}
+  e^{\pm i \; \text{sgn}(t) \left(|\vec{p}| \pm i \epsilon\right) t}
+\end{equation}
+where $\text{sgn}(\cdots)$ is a sign function.
+
+\subsection{Spatial component}
+
+Angular part of \eqref{eq:expanded-integral} can be easily solved
+\begin{align}
+\int^{1}_{-1} d \cos{\theta} \; e^{i |x| |\vec{p}| \cos{\theta}} = \\
+\frac{1}{i |x| |\vec{p}|} \left( e^{i |x| |\vec{p}|} - e^{-i |x| |\vec{p}|} \right). \label{eq:angular-part}
+\end{align}
+
+Putting \eqref{eq:time-part} and \eqref{eq:angular-part} back into \eqref{eq:expanded-integral} and using
+$\rho \equiv |\vec{p}|$ for brevity we get:
+\begin{align}
+\mp \lim_{\epsilon \to 0}& \frac{1}{4 \pi^2 |x|} \int_0^\infty d \rho \; \rho^2 \frac{1}{\rho} \left( e^{i |x| \rho} - e^{-i |x| \rho} \right) \times \notag \\
+& \frac{1}{2 \rho \pm i \epsilon} e^{\pm i \; \text{sgn}(t) \left(\rho \pm i \epsilon\right) t}. \label{eq:interim-1}
+\end{align}
+It is safe now to take the limit and remove $\epsilon$ from \eqref{eq:interim-1}:
+\begin{align}
+\mp \frac{1}{8 \pi^2 |x|} \int_0^\infty d \rho \; \left( e^{i |x| \rho} - e^{-i |x| \rho} \right) e^{\pm i \; \text{sgn}(t) \rho t}.
+\end{align}
+Setting the $\mp \frac{1}{8 \pi^2 |x|}$ aside for a moment we get:
+\begin{align}
+\int_0^\infty d \rho \left( e^{i \rho (|x| \pm \text{sgn}(t) t)} - e^{-i  \rho (|x|  \mp \text{sgn}(t) t)} \right).
+\end{align}
+
+We can now sum two solutions (for $i \epsilon$ and $-i \epsilon$) to get on the left hand side:
+\begin{align}
+-\frac{1}{8 \pi^2 |x|} & \int_0^\infty d\rho \left( e^{-i \rho (|x| + \text{sgn}(t) t)} + e^{i \rho (|x| + \text{sgn}(t))} \right) = \\
+-\frac{1}{8 \pi^2 |x|} & \int_{-\infty}^\infty d\rho \; e^{-i \rho (|x| + \text{sgn}(t) t)} = \\
+\frac{1}{4 \pi |x|} &  \delta \left( |x| + \text{sgn}(t) t \right) \label{eq:lhs}
+\end{align}
+and on the right hand side:
+\begin{align}
+\frac{1}{8 \pi^2 |x|} & \int_0^\infty d\rho \left( e^{-i \rho (|x| - \text{sgn}(t) t}) + e^{i \rho (|x| - \text{sgn}(t))} \right) = \\
+\frac{1}{8 \pi^2 |x|} & \int_{-\infty}^\infty d\rho \; e^{-i \rho (|x| - \text{sgn}(t) t)} = \\
+\frac{1}{4 \pi |x|} & \delta \left( |x| - \text{sgn}(t) t \right) \label{eq:rhs}
+\end{align}
+
+\subsection{Result}
+
+Summing \eqref{eq:lhs} and \eqref{eq:rhs} we get:
+\begin{align}
+\frac{1}{4 \pi |x|} \Big( \delta \big( |x| - \text{sgn}\left(t\right) t \big) -
+  \delta \big( |x| + \text{sgn}\left(t\right) t \big) \Big) = \\
+\frac{1}{4 \pi |x|} \Big( \delta \big( |x| - |t| \big) - \delta \big( |x| + |t| \big) \Big).
+\end{align}
+
+Thus the final result is:
+\begin{align}
+G(x - y) = \frac{1}{4 \pi |x|} \Big( & \delta \big( |\mathbf{x} - \mathbf{y}| - |x^0 - y^0| \big) - \\
+& \delta \big( |\mathbf{x} - \mathbf{y}| + |x^0 - y^0| \big) \Big).
+\end{align}
 
 \end{document}
