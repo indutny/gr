@@ -21,7 +21,10 @@
 \setlength{\pdfpageheight}{\paperheight}
 \setlength{\pdfpagewidth}{\paperwidth}
 
+\usetikzlibrary{calc,decorations.markings}
+
 \begin{document}
+
 
 \title{Deriving Green's function for d'Alembert operator}
 \author{indutny}
@@ -66,6 +69,8 @@ The normalization for Fourier transforms is chosen such that:
 f(x) & = \int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \tilde{f}(p).
 \end{align}
 
+Heaviside step function $\Theta(x)$ is $1$ for $x > 0$ and $0$ otherwise.
+
 \subsection{Green's function}
 
 Our goal is to solve:
@@ -93,7 +98,7 @@ First of all, instead of solving for $\Psi(x - y)$ we could solve for $\Psi(x)$ 
 to get the end result. Substituting the Fourier transforms
 \begin{align}\label{eq:fourier-transform}
 \Psi(x) & = \int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \tilde{\Psi}(p) \\
-\delta^{(4)} (x) = \int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \cdot 1
+\delta^{(4)} (x) & = \int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \cdot 1
 \end{align}
 into \eqref{eq:dalembert-eq} we get:
 \begin{align}\label{eq:fourier-step}
@@ -133,33 +138,63 @@ This integral can be solved in the complex plane if we shift the denominator sli
 \begin{align}
 & -\lim_{\epsilon \to 0} \int \frac{d p_0}{2 \pi} e^{-i p_0 t} \frac{1}{(p_0)^2 - |\vec{p}|^2 \mp i \epsilon} = \\
 & -\lim_{\epsilon \to 0} \int \frac{d p_0}{2 \pi} e^{-i p_0 t} \frac{1}{p_0 + \left( |\vec{p}| \pm i \epsilon \right)}
-  \frac{1}{p_0 - \left(|\vec{p}| \pm i \epsilon \right)}.
+  \frac{1}{p_0 - \left(|\vec{p}| \pm i \epsilon \right)} \label{eq:expanded-time}.
 \end{align}
 
-For each sign of $\pm i \epsilon$ we have two different poles:
+For each sign of $\pm i \epsilon$ we have two different poles and the integration contour can be closed
+\textbf{below} when $t > 0$:
 \begin{center}
 \begin{tikzpicture}
 \begin{scope}[thick,font=\scriptsize]
 % Axes:
-\draw [->] (-3,0) -- (3,0) node [above left]  {$\Re\{p_0\}$};
-\draw [->] (0,-3) -- (0,3) node [below right] {$\Im\{p_0\}$};
+\draw [->] (-3,0) -- (3,0) node [above left]  {$\text{Re}[p_0]$};
+\draw [->] (0,-3) -- (0,3) node [below right] {$\text{Im}[p_0]$};
 
 % Poles
-
 \path [draw=none, fill=black] (1.5, 0.5) circle (0.05);
-\node [above, black] at (1.5, 0.5) {$-|\vec{p}| - i \epsilon$};
+\node [above left, black] at (1.5, 0.5) {$|\vec{p}| + i \epsilon$};
 
 \path [draw=none, fill=black] (-1.5, -0.5) circle (0.05);
-\node [below, black] at (-1.5, -0.5) {$-|\vec{p}| - i \epsilon$};
+\node [below right, black] at (-1.5, -0.5) {$-|\vec{p}| - i \epsilon$};
 
 \path [draw=black, fill=none] (1.5, -0.5) circle (0.05);
-\node [below, black] at (1.5, -0.5) {$|\vec{p}| - i \epsilon$};
+\node [below left, black] at (1.5, -0.5) {$|\vec{p}| - i \epsilon$};
 
 \path [draw=black, fill=none] (-1.5, 0.5) circle (0.05);
-\node [above, black] at (-1.5, 0.5) {$-|\vec{p}| + i \epsilon$};
+\node [above right, black] at (-1.5, 0.5) {$-|\vec{p}| + i \epsilon$};
+
+% Contours
+
+\draw[thick,decoration={ markings,
+      mark=at position 0.25 with {\arrow{latex}}, 
+      mark=at position 0.75 with {\arrow{latex}}}, 
+      postaction={decorate}]
+ (-2,-0.15) -- (2,-0.15);
+\draw[thick,decoration={ markings,
+      mark=at position 0.3 with {\arrow{latex}}, 
+      mark=at position 0.75 with {\arrow{latex}}}, 
+      postaction={decorate}]
+ (2,-0.3) arc (0:-180:2);
 
 \end{scope}
 \end{tikzpicture}
 \end{center}
+(Note that we drew the bottom part of the contour disjoint from the rest to emphasize that it can be added
+to the integral without changing the value of \eqref{eq:expanded-time} because $e^{-i p_0 t}$ becomes
+infinitesimal at $\text{Im}[p_0] \to -\infty$. Adding this curve lets us close the contour and use the Residue
+theorem.)
+
+The integration contour picks either of the poles in the bottom half of the complex plane and we get:
+\begin{equation}\label{eq:time-solution-ret}
+t > 0 : \eqref{eq:expanded-time} = \mp i \lim_{\epsilon \to 0} \frac{1}{2 |\vec{p}| \pm i \epsilon}
+  e^{\pm i \left(|\vec{p}| \pm i \epsilon\right) t}.
+\end{equation}
+
+Similar solution for $t < 0$ and with contour closed above (the reader can check the behavior of
+$e^{i p_0 t}$ for negative $t$ and $p_0$ far on the positive imaginary axis) is:
+\begin{equation}\label{eq:time-solution-adv}
+t < 0 : \eqref{eq:expanded-time} = \mp i \lim_{\epsilon \to 0} \frac{1}{2 |\vec{p}| \pm i \epsilon}
+  e^{\mp i \left(|\vec{p}| \pm i \epsilon\right) t}.
+\end{equation}
 
 \end{document}
