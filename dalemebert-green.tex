@@ -141,7 +141,8 @@ This integral can be solved in the complex plane if we shift the denominator sli
   \frac{1}{p_0 - \left(|\vec{p}| \pm i \epsilon \right)} \label{eq:expanded-time}.
 \end{align}
 
-For each sign of $\pm i \epsilon$ we have two different poles and the integration contour can be closed
+For each sign of $\pm i \epsilon$ we have two different poles (``$\oplus$" for $+i \epsilon$ and
+``$\ominus$" for $-i \epsilon$ on the chart) and the integration contour can be closed
 \textbf{below} when $t > 0$:
 \begin{center}
 \begin{tikzpicture}
@@ -151,16 +152,16 @@ For each sign of $\pm i \epsilon$ we have two different poles and the integratio
 \draw [->] (0,-3) -- (0,3) node [below right] {$\text{Im}[p_0]$};
 
 % Poles
-\path [draw=none, fill=black] (1.5, 0.5) circle (0.05);
+\node at (1.5, 0.5) {$\oplus$};
 \node [above left, black] at (1.5, 0.5) {$|\vec{p}| + i \epsilon$};
 
-\path [draw=none, fill=black] (-1.5, -0.5) circle (0.05);
+\node at (-1.5, -0.5) {$\oplus$};
 \node [below right, black] at (-1.5, -0.5) {$-|\vec{p}| - i \epsilon$};
 
-\path [draw=black, fill=none] (1.5, -0.5) circle (0.05);
+\node at (1.5, -0.5) {$\ominus$};
 \node [below left, black] at (1.5, -0.5) {$|\vec{p}| - i \epsilon$};
 
-\path [draw=black, fill=none] (-1.5, 0.5) circle (0.05);
+\node at (-1.5, 0.5) {$\ominus$};
 \node [above right, black] at (-1.5, 0.5) {$-|\vec{p}| + i \epsilon$};
 
 % Contours
