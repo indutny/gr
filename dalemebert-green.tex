@@ -29,17 +29,10 @@
 \noaffiliation
 
 \begin{abstract}
-Spin-$\frac{1}{2}$ particles are governed by Dirac equation and are described by
-4-component objects named spinors. Given the influence of Special Relativity
-on the derivation of Dirac equation it is inevitable that the physical processes
-involving spin-$\frac{1}{2}$ particles have to be independent of observer and their
-inertial frame. Measurements made in one frame should agree with the
-measurements made in another, and thus the components of spinor have to
-transform between frames. In this paper we introduce the generators of
-Lorentz transformations that form a Lie algebra, find the decomposition of
-Lorentz algebra into a sum of two sub-algebras $\mathfrak{su}(2) \oplus \mathfrak{su}(2)$,
-build left- and right- handed representations of spin-$\frac{1}{2}$ particles and combine
-them to form a full Dirac spinor.
+Green's functions play vital role in all physical disciplines. Most sophisticated Quantum Field Theory and
+General Relativity calculations would rely on knowing Green's function for computing general solutions. In fact
+obtaining the Green's function for an operator is equivalent to obtaining the operator's inverse. In this short and
+terse paper we obtain the Green's function for a d'Alembert operator ``$\square$".
 \end{abstract}
 
 \maketitle
@@ -48,7 +41,7 @@ them to form a full Dirac spinor.
 
 \subsection{Conventions}
 
-The metric is:
+It is common in General Relativity texts to use following convention for the metric:
 \begin{equation}
 \eta_{\mu\nu} = \eta^{\mu\nu} = \begin{pmatrix}
 -1 & 0 & 0 & 0 \\
@@ -57,14 +50,29 @@ The metric is:
 0 & 0 & 0 & 1
 \end{pmatrix}.
 \end{equation}
+With this metric in mind the d'Alembert operator becomes:
+\begin{equation}
+\square f(x) = \eta^{\mu\nu} \partial_\mu \partial_\nu f(x) =
+  \left( -\partial_0 \partial_0 + \partial_i \partial^i \right) f(x),
+\end{equation}
+where repeated latin or greek indices are assumed to be summed as per Einstein's convention.
+
+We will denote 4-vectors as $p$ and 3-vector part of it as $\vec{p}$. The norm of both is $|p|$ and $|\vec{p}|$
+respectively.
+
+The normalization for Fourier transforms is chosen such that:
+\begin{align}
+\tilde{f}(p) & = \int d^4x \; e^{-i p \cdot x } f(x), \\
+f(x) & = \int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \tilde{f}(p).
+\end{align}
 
 \subsection{Green's function}
 
 Our goal is to solve:
-\begin{equation}
+\begin{equation}\label{eq:dalembert-eq}
 \square \Psi(x - y) = \eta^{\mu\nu} \partial_\mu \partial_\nu \Psi(x - y) = \delta^{(4)} (x - y)
 \end{equation}
-for $\Psi(x - y)$.
+for $\Psi(x - y)$ (Note that $\partial_\mu$ here is $\frac{\partial}{\partial x^\mu}$).
 The resulting function can be used to compute the solutions to more general differential equation:
 \begin{equation}\label{eq:general-eq}
 \square h(x) = T(x).
@@ -74,6 +82,84 @@ Given the $\Psi(x - y)$ the reader can check that the solution to \eqref{eq:gene
 h(x) = \int d^4y \; \Psi(x - y) T(y).
 \end{equation}
 
+We wanted to be as explicit as possible in our solution. Thus it is our hope that the reader would forgive us the
+excessive amount of steps.
+
 \section{Solution}
+
+\subsection{Initial Steps}
+
+First of all, instead of solving for $\Psi(x - y)$ we could solve for $\Psi(x)$ and then shift the argument of the function
+to get the end result. Substituting the Fourier transforms
+\begin{align}\label{eq:fourier-transform}
+\Psi(x) & = \int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \tilde{\Psi}(p) \\
+\delta^{(4)} (x) = \int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \cdot 1
+\end{align}
+into \eqref{eq:dalembert-eq} we get:
+\begin{align}\label{eq:fourier-step}
+\int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \left[ \eta^{\mu\nu} (-i p_\mu) (-i p_\nu) \tilde{\Psi}(p) - 1 \right] & = \\
+\int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \left[ -p^2 \tilde{\Psi}(p) - 1 \right] & = 0.
+\end{align}
+Thus
+\begin{equation}\label{eq:fourier-solution}
+\tilde{\Psi}(p) = -\frac{1}{p^2}
+\end{equation}
+should in general solve \eqref{eq:fourier-step}. Plugging \eqref{eq:fourier-solution} back into
+\eqref{eq:fourier-transform} we see that
+\begin{equation}\label{eq:complex-integral}
+\Psi(x) = \int \frac{d^4p}{(2 \pi)^4} e^{i p \cdot x} \frac{1}{p^2}.
+\end{equation}
+
+Going to spherical coordinates for $\vec{p}$ and separating $p_0$ we get following integral:
+\begin{align}\label{eq:expanded-integral}
+& \int_0^{2 \pi} \frac{d \phi}{2 \pi} \int_{-1}^{1} \frac{d \cos{\theta}}{2 \pi} \int \frac{d |\vec{p}|}{2 \pi}
+  \int \frac{d p_0}{2 \pi} |\vec{p}|^2 e^{i p \cdot x} \left( \cdots \right) = \\
+& \; \; \frac{1}{4 \pi^2} \int_{-1}^{1} d \cos{\theta} \int d |\vec{p}|
+  \int \frac{d p_0}{2 \pi} e^{i p \cdot x} |\vec{p}|^2 \left( \cdots \right)
+\end{align}
+and
+\begin{align}
+e^{i p \cdot x} & = e^{-i p_0 t + i |x| |\vec{p}| \cos{\theta}}, \\
+\left( \cdots \right) & = \frac{1}{p^2} = -\frac{1}{(p_0)^2 - |\vec{p}|^2}.
+\end{align}
+
+\subsection{Time component}
+
+Let's look at $p_0$ part of the integral first:
+\begin{equation}\label{eq:time-initial}
+-\int \frac{d p_0}{2 \pi} e^{-i p_0 t} \frac{1}{(p_0)^2 - |\vec{p}|^2}.
+\end{equation}
+This integral can be solved in the complex plane if we shift the denominator slightly from the real axis (or equivalently shift the integration variable). Note that despite looking peculiar this is a perfectly valid trick in Complex Analysis. In fact this trick is ubiquitous in physics! With this in mind \eqref{eq:time-initial} becomes:
+\begin{align}
+& -\lim_{\epsilon \to 0} \int \frac{d p_0}{2 \pi} e^{-i p_0 t} \frac{1}{(p_0)^2 - |\vec{p}|^2 \mp i \epsilon} = \\
+& -\lim_{\epsilon \to 0} \int \frac{d p_0}{2 \pi} e^{-i p_0 t} \frac{1}{p_0 + \left( |\vec{p}| \pm i \epsilon \right)}
+  \frac{1}{p_0 - \left(|\vec{p}| \pm i \epsilon \right)}.
+\end{align}
+
+For each sign of $\pm i \epsilon$ we have two different poles:
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[thick,font=\scriptsize]
+% Axes:
+\draw [->] (-3,0) -- (3,0) node [above left]  {$\Re\{p_0\}$};
+\draw [->] (0,-3) -- (0,3) node [below right] {$\Im\{p_0\}$};
+
+% Poles
+
+\path [draw=none, fill=black] (1.5, 0.5) circle (0.05);
+\node [above, black] at (1.5, 0.5) {$-|\vec{p}| - i \epsilon$};
+
+\path [draw=none, fill=black] (-1.5, -0.5) circle (0.05);
+\node [below, black] at (-1.5, -0.5) {$-|\vec{p}| - i \epsilon$};
+
+\path [draw=black, fill=none] (1.5, -0.5) circle (0.05);
+\node [below, black] at (1.5, -0.5) {$|\vec{p}| - i \epsilon$};
+
+\path [draw=black, fill=none] (-1.5, 0.5) circle (0.05);
+\node [above, black] at (-1.5, 0.5) {$-|\vec{p}| + i \epsilon$};
+
+\end{scope}
+\end{tikzpicture}
+\end{center}
 
 \end{document}
