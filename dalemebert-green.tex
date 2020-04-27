@@ -1,0 +1,79 @@
+%\documentclass[aps,prd,preprint]{revtex4-1}
+\documentclass[aps,prd,final,twocolumn,floats,floatfix,nofootinbib,10pt]{revtex4-1}
+
+% Note:  comment out one of the two documentclass commands, depending
+% on whether you need the final or preprint version. It is most convenient
+% to work in preprint mode, and switch to final only at the end.
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage[english]{babel}
+\usepackage{helvet}
+\usepackage{microtype}
+\usepackage{dsfont}
+\usepackage[pdftex]{hyperref}
+\usepackage{tikz}
+
+\special{papersize=8.5in,11in}
+\setlength{\pdfpageheight}{\paperheight}
+\setlength{\pdfpagewidth}{\paperwidth}
+
+\begin{document}
+
+\title{Deriving Green's function for d'Alembert operator}
+\author{indutny}
+\date{\today}
+\noaffiliation
+
+\begin{abstract}
+Spin-$\frac{1}{2}$ particles are governed by Dirac equation and are described by
+4-component objects named spinors. Given the influence of Special Relativity
+on the derivation of Dirac equation it is inevitable that the physical processes
+involving spin-$\frac{1}{2}$ particles have to be independent of observer and their
+inertial frame. Measurements made in one frame should agree with the
+measurements made in another, and thus the components of spinor have to
+transform between frames. In this paper we introduce the generators of
+Lorentz transformations that form a Lie algebra, find the decomposition of
+Lorentz algebra into a sum of two sub-algebras $\mathfrak{su}(2) \oplus \mathfrak{su}(2)$,
+build left- and right- handed representations of spin-$\frac{1}{2}$ particles and combine
+them to form a full Dirac spinor.
+\end{abstract}
+
+\maketitle
+
+\section{Overview}
+
+\subsection{Conventions}
+
+The metric is:
+\begin{equation}
+\eta_{\mu\nu} = \eta^{\mu\nu} = \begin{pmatrix}
+-1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix}.
+\end{equation}
+
+\subsection{Green's function}
+
+Our goal is to solve:
+\begin{equation}
+\square \Psi(x - y) = \eta^{\mu\nu} \partial_\mu \partial_\nu \Psi(x - y) = \delta^{(4)} (x - y)
+\end{equation}
+for $\Psi(x - y)$.
+The resulting function can be used to compute the solutions to more general differential equation:
+\begin{equation}\label{eq:general-eq}
+\square h(x) = T(x).
+\end{equation}
+Given the $\Psi(x - y)$ the reader can check that the solution to \eqref{eq:general-eq} is:
+\begin{equation}
+h(x) = \int d^4y \; \Psi(x - y) T(y).
+\end{equation}
+
+\section{Solution}
+
+\end{document}
