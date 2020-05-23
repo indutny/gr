@@ -144,8 +144,33 @@ which we can substitute back into \eqref{prefinal-single-A} to get a nice expres
 \subsection{\texorpdfstring{$O(A^2)$}{Double-A}  terms}
 
 We still have two terms with double $A$ in them left:
+\begin{align}\label{eq:double-A}
+4 \left( A^k_{ij} A^l_{kl} - A^k_{il} A^l_{jk} \right)
+\end{align}
+
+The first term expands to
 \begin{align}
-4 A^k_{ij} A^k_{kl} - 4 A^k_{il} A^l_{jk}
+A^k_{ij} A^l_{kl} = & \;
+  \left( \delta^k_{\; i} \OD_j \alpha + \delta^k_{\; j} \OD_i \alpha - \ogamma_{ij} \ogamma^{km} \OD_m \alpha \right)
+  \left( \delta^l_{\; k} \OD_l \alpha + \delta^l_{\; l} \OD_k \alpha - \ogamma_{kl} \ogamma^{lp} \OD_p \alpha \right) \\
+= & \; \delta^k_{\; i} \delta^l_{\; k} \OD_j \alpha \OD_l \alpha + \delta^k_{\; j} \delta^l_{\; k} \OD_i \alpha  \OD_k \alpha -
+  \delta^l_{\; k} \ogamma_{ij} \ogamma^{km} \OD_m \alpha \OD_l \alpha \notag \\
+& + 3 \delta^k_{\; i} \OD_j \alpha \OD_k \alpha +3 \delta^k_{\; j} \OD_i \alpha \OD_k \alpha -
+  3 \ogamma_{ij} \ogamma^{km} \OD_m \alpha \OD_k \alpha \notag \\
+& - \delta^k_{\; i} \ogamma_{kl} \ogamma^{lp} \OD_j \alpha \OD_p \alpha -
+  \delta^k_{\; j} \ogamma_{kl} \ogamma^{lp} \OD_i \alpha \OD_p \alpha +
+  \ogamma_{ij} \ogamma^{km} \ogamma_{kl} \ogamma^{lp} \OD_m \alpha \OD_p \alpha \\
+= & \; \OD_i \alpha \OD_j \alpha + \OD_i \alpha \OD_j \alpha - \ogamma_{ij} \ogamma^{kl} \OD_k \alpha \OD_l \alpha
+  \notag \\
+& + 3 \OD_i \alpha \OD_j \alpha + 3 \OD_i \alpha \OD_j \alpha - 3 \ogamma_{ij} \ogamma^{kl} \OD_k \alpha \OD_l \alpha
+  \notag \\
+& - \OD_i \alpha \OD_j \alpha - \OD_i \alpha \OD_j \alpha + \ogamma_{ij} \ogamma^{jk} \OD_k \alpha \OD_l \alpha \\
+= & \; 6 \OD_i \alpha \OD_j \alpha - 3 \ogamma_{ij} \ogamma^{kl} \OD_k \alpha \OD_l \alpha. \label{eq:double-A-first}
+\end{align}
+
+The second term expands to
+\begin{align}
+A^k_{il} A^l_{jk}
 \end{align}
 
 \end{document}
