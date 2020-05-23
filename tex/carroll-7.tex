@@ -1,0 +1,116 @@
+\documentclass[aps,prd,preprint]{revtex4-1}
+%\documentclass[aps,prd,final,twocolumn,floats,floatfix,nofootinbib,10pt]{revtex4-1}
+
+% Note:  comment out one of the two documentclass commands, depending
+% on whether you need the final or preprint version. It is most convenient
+% to work in preprint mode, and switch to final only at the end.
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage[english]{babel}
+\usepackage{helvet}
+\usepackage{microtype}
+\usepackage{dsfont}
+\usepackage[pdftex]{hyperref}
+\usepackage{tikz}
+
+\special{papersize=8.5in,11in}
+\setlength{\pdfpageheight}{\paperheight}
+\setlength{\pdfpagewidth}{\paperwidth}
+
+\begin{document}
+
+\title{Solving problem in Carroll's Spacetime}
+\author{indutny}
+\date{\today}
+\noaffiliation
+
+\maketitle
+
+\section{General Relativity Problem}
+
+\subsection{Problem statement}
+
+Prove that:
+\begin{align}\label{eq:problem}
+t_{\mu\nu} = \langle \left( \partial_\mu h_{\rho \sigma} \right) \left( \partial_\nu h^{\rho \sigma} \right) - \
+  \frac{1}{2} \left( \partial_\mu h \right) \left( \partial_\nu h \right) - \
+  \left( \partial_\rho h^{\rho \sigma} \right) \left( \partial_\mu h_{\nu \sigma} \right) - \
+  \left( \partial_\rho h^{\rho \sigma} \right) \left( \partial_\nu h_{\mu \sigma} \right) \rangle
+\end{align}
+is invariant under gauge transformation:
+\begin{align}\label{eq:metric-var}
+\delta h_{\mu\nu} = \partial_\mu \xi_\nu + \partial_\nu \xi_\mu.
+\end{align}
+The ``$\langle$'', ``$\rangle$'' brackets mean time averaging and allow moving partial derivatives around:
+\begin{align}
+\langle A \partial_\mu B \rangle = - \langle \left( \partial_\mu A \right) B \rangle.
+\end{align}
+
+\subsection{First Attempt}
+
+The variation of $h$ is:
+\begin{align}\label{eq:trace-var}
+\delta h =  \partial^{\mu\nu} \delta h_{\mu\nu} = 2 \partial^\lambda \xi_\lambda.
+\end{align}
+
+Let's simplify it term by term:
+\begin{align}
+& \left( \partial_\mu h_{\rho \sigma} \right) \left( \partial_\nu h^{\rho \sigma} \right)\\
+= & \left( \partial_\mu \partial_\rho \xi_\sigma + \partial_\mu \partial_\sigma \xi_\rho \right)
+    \left( \partial_\nu h^{\rho \sigma} \right) +
+  \left( \partial_\mu h_{\rho \sigma} \right) \left( \partial_\nu \partial^\rho \xi^\sigma +
+    \partial_\nu \partial^\sigma \xi^\rho \right) \\
+= & -2 h^{\rho\sigma} \left( \partial_\mu \partial_\nu \partial_\rho \xi_\sigma +
+    \partial_\mu \partial_\nu \partial_\sigma \xi_\rho \right), \label{eq:first-term}
+\end{align}
+\begin{align}
+-\frac{1}{2} \left( \partial_\mu h \right) \left( \partial_\nu h \right) & =
+  -\left( \partial_\mu \partial^\lambda \xi_\lambda \right) \left( \partial_\nu h \right) -
+  \left( \partial_\mu h \right) \left( \partial_\nu \partial^\lambda \xi_\lambda \right) \\
+& = 2 h^{\rho\sigma} \left( \eta_{\rho\sigma} \partial_\mu \partial_\nu \partial^\lambda \xi_\lambda \right),
+  \label{eq:second-term}
+\end{align}
+\begin{align}
+-\left( \partial_\rho h^{\rho \sigma} \right) \left( \partial_\mu h_{\nu \sigma} \right) & =
+  -\left( \partial_\rho \partial^\rho \xi^\sigma + \partial_\rho \partial^\sigma \xi^\rho \right)
+    \left( \partial_\mu h_{\nu \sigma} \right) -
+  \left( \partial_\rho h^{\rho \sigma} \right) \left( \partial_\mu \partial_\nu \xi_\sigma +
+    \partial_\mu \partial_\sigma \xi_\nu \right) \\
+& = h^{\rho \sigma} \left[
+  \eta_{\rho \nu} \left( \partial_\mu \square \xi_\sigma +
+    \partial_\mu \partial_\sigma \partial^\lambda \xi_\lambda \right) +
+    \partial_\rho \partial_\mu \partial_\nu \xi_\sigma +
+    \partial_\rho \partial_\mu \partial_\sigma \xi_\nu \right], \label{eq:third-term}
+\end{align}
+and similarly:
+\begin{align}
+-\left( \partial_\rho h^{\rho \sigma} \right) \left( \partial_\nu h_{\mu \sigma} \right) =
+h^{\rho \sigma} \left[
+  \eta_{\rho \mu} \left( \partial_\nu \square \xi_\sigma +
+    \partial_\nu \partial_\sigma \partial^\lambda \xi_\lambda \right) +
+    \partial_\rho \partial_\mu \partial_\nu \xi_\sigma +
+    \partial_\rho \partial_\nu \partial_\sigma \xi_\mu \right]. \label{eq:fourth-term}
+\end{align}
+
+Combining \eqref{eq:first-term}, \eqref{eq:second-term}, \eqref{eq:third-term}, and \eqref{eq:fourth-term} together
+we gett:
+\begin{align}
+& h^{\rho\sigma} \Big[
+  - 2 \left( \partial_\mu \partial_\nu \partial_\rho \xi_\sigma + \partial_\mu \partial_\nu \partial_\sigma \xi_\rho \right)
+  + 2 \eta_{\rho\sigma} \partial_\mu \partial_\nu \partial^\lambda \xi_\lambda \notag \\
+  & + \eta_{\rho \nu} \left( \partial_\mu \square \xi_\sigma +
+    \partial_\mu \partial_\sigma \partial^\lambda \xi_\lambda \right) +
+    \partial_\rho \partial_\mu \partial_\nu \xi_\sigma +
+    \partial_\rho \partial_\mu \partial_\sigma \xi_\nu \notag \\
+  & + \eta_{\rho \mu} \left( \partial_\nu \square \xi_\sigma +
+    \partial_\nu \partial_\sigma \partial^\lambda \xi_\lambda \right) +
+    \partial_\rho \partial_\mu \partial_\nu \xi_\sigma +
+    \partial_\rho \partial_\nu \partial_\sigma \xi_\mu
+\Big]
+\end{align}
+
+\end{document}

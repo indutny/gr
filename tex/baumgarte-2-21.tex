@@ -1,0 +1,72 @@
+\documentclass[aps,prd,preprint]{revtex4-1}
+%\documentclass[aps,prd,final,twocolumn,floats,floatfix,nofootinbib,10pt]{revtex4-1}
+
+% Note:  comment out one of the two documentclass commands, depending
+% on whether you need the final or preprint version. It is most convenient
+% to work in preprint mode, and switch to final only at the end.
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage[english]{babel}
+\usepackage{helvet}
+\usepackage{microtype}
+\usepackage{dsfont}
+\usepackage[pdftex]{hyperref}
+\usepackage{tikz}
+
+\special{papersize=8.5in,11in}
+\setlength{\pdfpageheight}{\paperheight}
+\setlength{\pdfpagewidth}{\paperwidth}
+
+\begin{document}
+
+\title{2.21 in Baumgarte}
+\author{indutny}
+\date{\today}
+\noaffiliation
+
+\maketitle
+
+\section{2.21}
+
+\subsection{Problem statement}
+
+Useful identities:
+\begin{align}
+\Omega_a = \nabla_a t, \\
+\nabla_{[a} \Omega_{b]} = 0, \\
+-\frac{1}{\alpha^2} = g^{ab} \Omega_a \Omega_b, \\
+\omega_a = \alpha \Omega_a, \\
+n^a = -g^{ab} \omega_b, \\
+n^a n_a = -1, \\
+\gamma^a_{\; b} = \delta^a_{\; b} + n^a n_b, \\
+n^a \nabla_a n_b \equiv a_b, \\
+\gamma^a_{\; b} \frac{\nabla_a \alpha}{\alpha} = a_b.
+\end{align}
+
+Prove that:
+\begin{align}
+{\cal{L}}_{\alpha n} \gamma^a_{\; b} = 0.
+\end{align}
+
+\subsection{Attempted solution}
+
+\begin{align}
+{\cal{L}}_{\alpha n} \gamma^a_{\; b} = &
+  \alpha n^c \nabla_c \gamma^a_{\; b} +
+  \nabla_b (\alpha n^c) \gamma^a_{\; c} -
+  \nabla_c (\alpha n^a) \gamma^c_{\; b} \\
+= & \alpha n^c \nabla_c (n^a n_b) +
+  \underbrace{\gamma^a_{\; c} n^c}_{0}  \nabla_b \alpha + \alpha \gamma^a_{\; c} \nabla_b n^c -
+  n^a \underbrace{\gamma^c_{\; b} \nabla_c \alpha}_{\alpha a_b} - \alpha \gamma^c_{\; b} \nabla_c n^a \\
+= & \alpha n_b \underbrace{n^c \nabla_c n^a}_{a^a} + \alpha n^a \underbrace{n^c \nabla_c n_b}_{a_b} +
+  \alpha \nabla_b n^a + \alpha n^a n_c \nabla_b n^c -   \alpha n^a a_b \\
+& - \alpha \nabla_b n^a - \alpha n_b \underbrace{n^c \nabla_c n^a}_{a^a} \\
+= & \alpha n^a n_c \nabla_b n^c = \alpha n^a \underbrace{ \nabla_b ( n_c n^c ) }_{0} - \alpha n^a n^c \nabla_b n_c \\
+= & -n^a n^c \underbrace{\nabla_b (\alpha n_c)}_{-\nabla_b \omega_c} + n^a \underbrace{n^c n_c}_{-1} \nabla_b \alpha
+\end{align}
+
+\end{document}

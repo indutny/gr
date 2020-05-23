@@ -1,0 +1,204 @@
+\documentclass[aps,prd,preprint]{revtex4-1}
+%\documentclass[aps,prd,final,twocolumn,floats,floatfix,nofootinbib,10pt]{revtex4-1}
+
+% Note:  comment out one of the two documentclass commands, depending
+% on whether you need the final or preprint version. It is most convenient
+% to work in preprint mode, and switch to final only at the end.
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage[english]{babel}
+\usepackage{helvet}
+\usepackage{microtype}
+\usepackage{dsfont}
+\usepackage[pdftex]{hyperref}
+\usepackage{tikz}
+
+\special{papersize=8.5in,11in}
+\setlength{\pdfpageheight}{\paperheight}
+\setlength{\pdfpagewidth}{\paperwidth}
+
+\begin{document}
+
+\title{2.32 in Baumgarte}
+\author{indutny}
+\date{\today}
+\noaffiliation
+
+\maketitle
+
+\section{Ricci tensor for conformal metric}
+
+\subsection{Problem statement}
+
+Compute Ricci tensor:
+\begin{align}\label{eq:ricci}
+R_{ij} = \partial_k \Gamma^k_{ij} - \partial_j \Gamma^k_{ik} + \Gamma^k_{ij} \Gamma^l_{kl} -
+  \Gamma^k_{il} \Gamma^l_{jk}
+\end{align}
+for the metric
+\begin{align}
+\gamma_{ij} = \psi^4(r) \text{diag} \left(1, r^2, r^2 \sin^2 \theta \right),
+\end{align}
+where Christoffel Symbol is defined as:
+\begin{align}\label{eq:cristoffel}
+\Gamma^i_{jk} = \frac{1}{2} \gamma^{il} \left( \gamma_{lj,k} + \gamma_{lk,j} - \gamma_{jk,l} \right)
+\end{align}
+and $\psi$ is an arbitrary function of the radial coordinate $r$.
+
+\subsection{Preparations}
+
+The inverse of the diagonal metric is obviously:
+\begin{align}
+\gamma^{ij} = \frac{1}{\psi^4(r)} \text{diag} \left(1, \frac{1}{r^2}, \frac{1}{r^2 \sin^2 \theta} \right).
+\end{align}
+
+\subsection{Christoffel Symbols}
+
+Let's start by meticulously computing all Christoffel symbols. With upper index ``$r$'' they are:
+\begin{align}
+%
+% r_{rr}
+%
+\Gamma^r_{rr} & = \frac{1}{2} \gamma^{rr} \left(
+  \gamma_{rr,r} + \gamma_{rr,r} - \gamma_{rr,r} \right) =
+\frac{1}{2} \gamma^{rr} \gamma_{rr, r} =
+\frac{1}{2 \psi^4} \partial_r \left( \psi^4 \right) =
+\frac{2 \partial_r \psi}{\psi}, \\
+%
+% r_{r\theta}
+%
+\Gamma^r_{r \theta} & = \frac{1}{2} \gamma^{rr} \left(
+  \gamma_{rr, \theta} + \gamma_{r \theta, r} - \gamma_{r \theta, r} \right) = 0, \\
+%
+% r_{r \phi}
+%
+\Gamma^r_{r \phi} & =
+  \frac{1}{2} \gamma^{rr} \left( \gamma_{rr, \phi} + \gamma_{r\phi, r} - \gamma_{r \phi, r} \right) = 0, \\
+%
+% r_{\theta \theta}
+%
+\Gamma^r_{\theta \theta} & =
+  \frac{1}{2} \gamma^{rr} \left(
+    \gamma_{r \theta, \theta} + \gamma_{r \theta, \theta} - \gamma_{\theta \theta, r} \right) =
+-\frac{1}{2 \psi^4} \partial_r \left( \psi^4 r^2 \right) =
+-\frac{2 r^2 \partial_r \psi}{\psi} - r, \\
+%
+% r_{\theta \phi}
+%
+\Gamma^r_{\theta \phi} & =
+  \frac{1}{2} \gamma^{rr} \left(
+    \gamma_{r \theta, \phi} + \gamma_{r \phi, \theta} - \gamma_{\theta \phi, r} \right) = 0, \\
+%
+% r_{\phi \phi}
+%
+\Gamma^r_{\phi \phi} & =
+  \frac{1}{2} \gamma^{rr} \left(
+    \gamma_{r \phi, \phi} + \gamma_{r \phi, \phi} - \gamma_{\phi \phi, r} \right) =
+-\frac{1}{2 \psi^4} \partial_r \left( \psi^4 r^2 \sin^2\theta \right) = \sin^2 \theta \; \Gamma^r_{\theta \theta}.
+\end{align}
+
+With upper index ``$\theta$'':
+\begin{align}
+%
+% \theta_{rr}
+%
+\Gamma^\theta_{rr} & = \frac{1}{2} \gamma^{\theta \theta} \left(
+  \gamma_{\theta r,r} + \gamma_{\theta r,r} - \gamma_{rr,\theta} \right) = 0, \\
+%
+% \theta_{r\theta}
+%
+\Gamma^\theta_{r \theta} & = \frac{1}{2} \gamma^{\theta\theta} \left(
+  \gamma_{\theta r, \theta} + \gamma_{\theta \theta, r} - \gamma_{r \theta, \theta} \right) =
+\frac{1}{2} \gamma^{\theta\theta} \gamma_{\theta \theta, r} =
+\frac{1}{2 \psi^4 r^2} \partial_r \left( \psi^4 r^2 \right) =
+-\frac{1}{r^2} \Gamma^r_{\theta \theta}, \\
+%
+% \theta_{r \phi}
+%
+\Gamma^\theta_{r \phi} & =
+  \frac{1}{2} \gamma^{\theta \theta} \left(
+    \gamma_{\theta r, \phi} + \gamma_{\theta \phi, r} - \gamma_{r \phi, \theta} \right) = 0, \\
+%
+% \theta_{\theta \theta}
+%
+\Gamma^\theta_{\theta \theta} & =
+  \frac{1}{2} \gamma^{\theta \theta} \left(
+    \gamma_{\theta \theta, \theta} + \gamma_{\theta \theta, \theta} - \gamma_{\theta \theta, \theta} \right) =
+-\frac{1}{2 r^2 \psi^4} \partial_\theta \left( \psi^4 r^2 \right) = 0, \\
+%
+% \theta_{\theta \phi}
+%
+\Gamma^\theta_{\theta \phi} & =
+  \frac{1}{2} \gamma^{\theta \theta} \left(
+    \gamma_{\theta \theta, \phi} + \gamma_{\theta \phi, \theta} - \gamma_{\theta \phi, \theta} \right) = 0, \\
+%
+% \theta_{\phi \phi}
+%
+\Gamma^\theta_{\phi \phi} & =
+  \frac{1}{2} \gamma^{\theta \theta} \left(
+    \gamma_{\theta \phi, \phi} + \gamma_{\theta \phi, \phi} - \gamma_{\phi \phi, \theta} \right) =
+-\frac{1}{2 r^2 \psi^4} \partial_\theta \left( \psi^4 r^2 \sin^2\theta \right) = - \sin \theta \cos \theta.
+\end{align}
+
+
+With upper index ``$\phi$'':
+\begin{align}
+%
+% \phi{rr}
+%
+\Gamma^\phi_{rr} & = \frac{1}{2} \gamma^{\phi \phi} \left(
+  \gamma_{\phi r,r} + \gamma_{\phi r,r} - \gamma_{rr,\phi} \right) = 0, \\
+%
+% \phi_{r\theta}
+%
+\Gamma^\phi_{r \theta} & = \frac{1}{2} \gamma^{\phi\phi} \left(
+  \gamma_{\phi r, \theta} + \gamma_{\phi \theta, r} - \gamma_{r \theta, \phi} \right) = 0, \\
+%
+% \phi{r \phi}
+%
+\Gamma^\phi_{r \phi} & =
+ \frac{1}{2} \gamma^{\phi \phi} \left(
+    \gamma_{\phi r, \phi} + \gamma_{\phi \phi, r} - \gamma_{r \phi, \phi} \right) =
+\frac{1}{2 \psi^4 r^2 \sin^2 \theta} \partial_r \left( \psi^4 r^2 \sin^2 \theta \right) = \Gamma^{\theta}_{r \theta},  \\
+%
+% \phi_{\theta \theta}
+%
+\Gamma^\phi_{\theta \theta} & =
+  \frac{1}{2} \gamma^{\phi \phi} \left(
+    \gamma_{\phi \theta, \theta} + \gamma_{\phi \theta, \theta} - \gamma_{\theta \theta, \phi} \right) = 0, \\
+%
+% \phi_{\theta \phi}
+%
+\Gamma^\phi_{\theta \phi} & =
+ \frac{1}{2} \gamma^{\phi \phi} \left(
+    \gamma_{\phi \theta, \phi} + \gamma_{\phi \phi, \theta} - \gamma_{\theta \phi, \phi} \right) =
+\frac{1}{2 \psi^4 r^2 \sin^2 \theta} \partial_\theta \left( \psi^4 r^2 \sin^2 \theta \right) =
+\frac{\cos \theta}{\sin \theta}, \\
+%
+% \phi_{\phi \phi}
+%
+\Gamma^\phi_{\phi \phi} & =
+  \frac{1}{2} \gamma^{\phi \phi} \left(
+    \gamma_{\phi \phi, \phi} + \gamma_{\phi \phi, \phi} - \gamma_{\phi \phi, \phi} \right) = 0.
+\end{align}
+
+Let's summarize the above computation by writing down non-zero components of $\Gamma^i_{jk}$:
+\begin{align}
+\Gamma^r_{rr} = \frac{2 \partial_r \psi}{\psi}, \;
+\Gamma^r_{\theta \theta} = -\frac{2 r^2 \partial_r \psi}{\psi} - r, \;
+\Gamma^r_{\phi \phi} = \sin^2 \theta \; \Gamma^r_{\theta \theta},
+\\
+\Gamma^\theta_{r \theta} = -\frac{1}{r^2} \Gamma^r_{\theta \theta}, \;
+\Gamma^\theta_{\phi \phi} = - \sin \theta \cos \theta,
+\\
+\Gamma^\phi_{r \phi} = \Gamma^{\theta}_{r \theta}, \;
+\Gamma^\phi_{\theta \phi} = \frac{\cos \theta}{\sin \theta}.
+\end{align}
+
+\subsection{Ricci Tensor}
+
+\end{document}

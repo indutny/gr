@@ -1,0 +1,151 @@
+\documentclass[aps,prd,preprint]{revtex4-1}
+%\documentclass[aps,prd,final,twocolumn,floats,floatfix,nofootinbib,10pt]{revtex4-1}
+
+% Note:  comment out one of the two documentclass commands, depending
+% on whether you need the final or preprint version. It is most convenient
+% to work in preprint mode, and switch to final only at the end.
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage[english]{babel}
+\usepackage{helvet}
+\usepackage{microtype}
+\usepackage{dsfont}
+\usepackage[pdftex]{hyperref}
+\usepackage{tikz}
+\usepackage[makeroom]{cancel}
+
+\special{papersize=8.5in,11in}
+\setlength{\pdfpageheight}{\paperheight}
+\setlength{\pdfpagewidth}{\paperwidth}
+
+\newcommand{\ogamma}{\overline{\gamma}}
+\newcommand{\OGamma}{\overline{\Gamma}}
+\newcommand{\OD}{\overline{D}}
+
+\begin{document}
+
+\title{3.3  in Baumgarte}
+\author{indutny}
+\date{\today}
+\noaffiliation
+
+\maketitle
+
+\section{Ricci tensor for conformal metric}
+
+\subsection{Problem statement}
+
+Compute conformal Ricci tensor using non-conformal formula:
+\begin{align}\label{eq:ricci}
+R_{ij} = \partial_k \Gamma^k_{ij} - \partial_j \Gamma^k_{ik} + \Gamma^k_{ij} \Gamma^l_{kl} -
+  \Gamma^k_{il} \Gamma^l_{jk}
+\end{align}
+for the metric
+\begin{align}
+\ogamma_{ij} = \psi^{-4} \gamma_{ij}, \; \ogamma^{ij} = \psi^{4} \gamma^{ij},
+\end{align}
+and Christoffel Symbol:
+\begin{align}\label{eq:cristoffel}
+\Gamma^i_{jk} = \frac{1}{2} \gamma^{il} \left( \gamma_{lj,k} + \gamma_{lk,j} - \gamma_{jk,l} \right),
+\end{align}
+where $\psi$ is an arbitrary function of spatial slice.
+
+\subsection{Christoffel Symbol}
+
+\begin{align}
+\Gamma^{i}_{jk} & = \frac{1}{2} \ogamma^{il} \left(
+  \ogamma_{lj,k} +
+  \ogamma_{lk,j} -
+  \ogamma_{jk,l} +
+  4 \ogamma_{lj} \partial_k \ln \psi +
+  4 \ogamma_{lk} \partial_j \ln \psi -
+  4 \ogamma_{jk} \partial_l \ln \psi \right) \\
+& = \OGamma^{i}_{jk} + 2 \left(
+  \delta^{i}_{\; j} \partial_k \ln \psi + \delta^{i}_{\; k} \partial_j \ln \psi - \ogamma^{il} \ogamma_{jk} \partial_l \ln \psi
+  \right) \\
+& = \OGamma^{i}_{jk} + 2 \left(
+  \delta^i_{\; j} \OD_k \ln \psi + \delta^i_{\; k} \OD_j \ln \psi - \ogamma_{jk} \ogamma^{il}  \OD_l \ln \psi \right).
+\label{eq:christoffel-rel}
+\end{align}
+For future convenience (and to save electronic ink) we define $\alpha \equiv \ln \psi$, and thus
+\eqref{eq:christoffel-rel} becomes:
+\begin{align}
+\Gamma^{i}_{jk} = \OGamma^{i}_{jk} + 2 \left(
+  \delta^i_{\; j} \OD_k \alpha + \delta^i_{\; k} \OD_j \alpha - \ogamma_{jk} \ogamma^{il}  \OD_l \alpha \right).
+\end{align}
+
+\subsection{Ricci Tensor}
+
+Let's introduce one more symbol to simplify later (formidable) calculations:
+\begin{align}\label{eq:A}
+A^i_{jk} & \equiv
+  \delta^i_{\; j} \OD_k \alpha + \delta^i_{\; k} \OD_j \alpha - \ogamma_{jk} \ogamma^{il}  \OD_l \alpha, \\
+\Gamma^i_{jk} & = \OGamma^i_{jk} + 2 A^i_{jk}.
+\end{align}
+
+With these definitions Ricci tensor becomes:
+\begin{align}\label{eq:R-expanded}
+R_{ij} = \; & \partial_k \left( \OGamma^k_{ij} + 2 A^k_{ij} \right) -
+  \partial_j \left( \OGamma^k_{ik} + 2 A^k_{ik} \right) \notag \\
+  & + \left( \OGamma^k_{ij} + 2 A^k_{ij} \right) \left( \OGamma^l_{kl} + 2 A^l_{kl} \right) -
+  \left( \OGamma^k_{il} + 2 A^k_{il} \right) \left( \OGamma^l_{jk} + 2 A^l_{jk} \right) \\
+= \; & \overline{R}_{ij} + 2 \partial_k A^k_{ij} -2 \partial_j A^k_{ik} \notag \\
+  & + 2 \OGamma^k_{ij} A^l_{kl}  + 2 \OGamma^l_{kl} A^k_{ij} + 4 A^k_{ij} A^l_{kl} -
+  2 \OGamma^k_{il} A^l_{jk} - 2 \OGamma^l_{jk} A^k_{il} - 4 A^k_{il} A^l_{jk}.
+\end{align}
+
+\subsection{\texorpdfstring{$O(A)$}{Single-A} terms}
+
+Terms with two $A$ would involve two $\alpha$ and thus do not mix with terms with single $A$. We can therefore 
+start by considering the terms with just a single $A$:
+\begin{align}\label{eq:single-A}
+2 \partial_k A^k_{ij} -2 \partial_j A^k_{ik} +
+  2 \OGamma^k_{ij} A^l_{kl}  + 2 \OGamma^l_{kl} A^k_{ij} -
+  2 \OGamma^k_{il} A^l_{jk} - 2 \OGamma^l_{jk} A^k_{il}.
+\end{align}
+The expression has a resemblance of a sum of covariant derivatives ($A^i_{jk}$ is trivially a tensor, symmetric under
+interchange of lower indices $j$ and $k$):
+\begin{align}\label{eq:cov-diff}
+2 \OD_k A^k_{ij} - 2 \OD_j A^k_{ik} = & \;
+  2 \partial_k A^k_{ij} + 2 \OGamma^k_{kl} A^l_{ij} - 2 \OGamma^l_{ki} A^k_{lj} -
+    \cancel{2 \OGamma^l_{kj} A^k_{il}} \notag \\
+  & - 2 \partial_j A^k_{ik} - 2 \OGamma^k_{jl} A^l_{ik} + 2 \OGamma^l_{ji} A^k_{lk} + \cancel{2 \OGamma^l_{jk} A^k_{il}} \\
+= & \; 2 \partial_k A^k_{ij} - 2 \partial_j A^k_{ik} + 2 \OGamma^k_{kl} A^l_{ij} - 2 \OGamma^l_{ki} A^k_{lj} -
+  2 \OGamma^l_{kj} A^k_{il} + 2 \OGamma^l_{ji} A^k_{lk},
+\end{align}
+and thus:
+\begin{align}
+\eqref{eq:single-A} = & \; 2 \OD_k A^k_{ij} - 2 \OD_j A^k_{ik} \\
+= & \; 2 \OD_k \left(
+    \delta^k_{\; i} \OD_j \alpha + \delta^k_{\; j} \OD_i \alpha - \ogamma_{ij} \ogamma^{kl} \OD_l \alpha
+  \right) -
+  2 \OD_j \left(
+    \delta^k_{\; i} \OD_k \alpha + \delta^k_{\; k} \OD_i \alpha - \ogamma_{ik} \ogamma^{kl} \OD_l \alpha
+  \right) \\
+= & \; 2 \OD_i \OD_j \alpha + 2 \OD_j \OD_i \alpha - 2 \ogamma_{ij} \OD^2 \alpha - 2 \OD_j \OD_i \alpha -
+  6 \OD_j \OD_i \alpha + 2 \OD_j \OD_i \alpha \\
+= & \; 2 \OD_i \OD_j \alpha - 4 \OD_j \OD_i \alpha - 2 \ogamma_{ij} \OD^2 \alpha \label{prefinal-single-A}.
+\end{align}
+
+Expression above requires some further massaging:
+\begin{align}
+\OD_j \OD_i \alpha = \OD_j \partial_i \alpha = \partial_j \partial_i \alpha - \OGamma^l_{ji} \partial_l \alpha =
+\OD_i \OD_j \alpha,
+\end{align}
+which we can substitute back into \eqref{prefinal-single-A} to get a nice expression:
+\begin{align}\label{eq:final-single-A}
+\eqref{eq:single-A} = -2 \left( \OD_i \OD_j \alpha + \ogamma_{ij} \OD^2 \alpha \right).
+\end{align}
+
+\subsection{\texorpdfstring{$O(A^2)$}{Double-A}  terms}
+
+We still have two terms with double $A$ in them left:
+\begin{align}
+4 A^k_{ij} A^k_{kl} - 4 A^k_{il} A^l_{jk}
+\end{align}
+
+\end{document}
