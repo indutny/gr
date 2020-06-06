@@ -39,10 +39,11 @@
 
 \subsection{Problem statement}
 
-Compute conformal Ricci tensor using non-conformal formula:
+Compute conformal Ricci tensor and scalar Ricci curvature using non-conformal formula:
 \begin{align}\label{eq:ricci}
-R_{ij} = \partial_k \Gamma^k_{ij} - \partial_j \Gamma^k_{ik} + \Gamma^k_{ij} \Gamma^l_{kl} -
-  \Gamma^k_{il} \Gamma^l_{jk}
+R_{ij} & = \partial_k \Gamma^k_{ij} - \partial_j \Gamma^k_{ik} + \Gamma^k_{ij} \Gamma^l_{kl} -
+  \Gamma^k_{il} \Gamma^l_{jk},\\ 
+R & = \gamma^{ij} R_{ij},
 \end{align}
 for the metric
 \begin{align}
@@ -80,7 +81,7 @@ For future convenience (and to save electronic ink) we define $\alpha \equiv \ln
 
 \subsection{Ricci Tensor}
 
-Let's introduce one more symbol to simplify later (formidable) calculations:
+Let's introduce one more symbol to simplify future (formidable) calculations:
 \begin{align}\label{eq:A}
 A^i_{jk} & \equiv
   \delta^i_{\; j} \OD_k \alpha + \delta^i_{\; k} \OD_j \alpha - \ogamma_{jk} \ogamma^{il}  \OD_l \alpha, \\
@@ -170,7 +171,67 @@ A^k_{ij} A^l_{kl} = & \;
 
 The second term expands to
 \begin{align}
-A^k_{il} A^l_{jk}
+A^k_{il} A^l_{jk} = & \;
+  \left( \delta^k_{\; i} \OD_l \alpha + \delta^k_{\; l} \OD_i \alpha - \ogamma_{il} \ogamma^{km} \OD_m \alpha \right)
+  \left( \delta^l_{\; j} \OD_k \alpha + \delta^l_{\; k} \OD_j \alpha - \ogamma_{jk} \ogamma^{lp} \OD_p \alpha \right) \\
+= & \; \delta^k_{\; i} \delta^l_{\; j} \OD_l \alpha \OD_k \alpha + \delta^k_{\; l} \delta^l_{\; j} \OD_i \alpha \OD_k \alpha -
+  \delta^l_{\; j} \ogamma_{il} \ogamma^{km} \OD_m \alpha \OD_k \alpha \notag \\
+& + \delta^k_{\; i} \delta^l_{\; k} \OD_l \alpha \OD_j \alpha + \delta^k_{\; l} \delta^l_{\; k} \OD_i \alpha \OD_j \alpha -
+  \delta^l_{\; k} \ogamma_{il} \ogamma^{km} \OD_j \alpha \OD_m \alpha \notag \\
+& -\delta^k_{\; i} \ogamma_{jk} \ogamma^{lp} \OD_l \alpha \OD_p \alpha -
+  \delta^k_{\; l} \ogamma_{jk} \ogamma^{lp} \OD_i \alpha \OD_p \alpha +
+  \ogamma_{il} \ogamma^{km} \ogamma_{jk} \ogamma^{lp} \OD_m \alpha \OD_p \alpha \\
+= & \; \OD_i \alpha \OD_j \alpha + \OD_i \alpha \OD_j \alpha - \ogamma_{ij} \ogamma^{kl} \OD_k \alpha \OD_l \alpha
+  \notag \\
+& + \OD_i \alpha \OD_j \alpha + 3 \OD_i \alpha \OD_j \alpha - \OD_i \alpha \OD_j \alpha \notag \\
+& - \ogamma_{ij} \ogamma^{kl} \OD_k \alpha \OD_l \alpha - \OD_i \alpha \OD_j \alpha + \OD_i \alpha \OD_j \alpha \\
+= & \; 5 \OD_i \alpha \OD_j \alpha - 2 \ogamma_{ij} \ogamma^{kl} \OD_k \alpha \OD_l \alpha.
+\label{eq:double-A-second}
+\end{align}
+
+Putting \eqref{eq:double-A-first} and \eqref{eq:double-A-second} together:
+\begin{align}
+4 \left( A^k_{ij} A^l_{kl} - A^k_{il} A^l_{jk} \right) = 4 \left(
+  \OD_i \alpha \OD_j \alpha - \ogamma_{ij} \ogamma^{kl} \OD_k \alpha \OD_l \alpha \right). \label{eq:double-A-final}
+\end{align}
+
+\subsection{Final Ricci Tensor}
+
+Inserting \eqref{eq:final-single-A} and \eqref{eq:double-A-final} back into \eqref{eq:R-expanded} we get:
+\begin{align}
+R_{ij} = & \; \overline{R}_{ij} -2 \left( \OD_i \OD_j \alpha + \ogamma_{ij} \OD^2 \alpha \right) + 4 \left(
+  \OD_i \alpha \OD_j \alpha - \ogamma_{ij} \ogamma^{kl} \OD_k \alpha \OD_l \alpha \right) \\
+= & \; \overline{R}_{ij} -2 \left( \OD_i \OD_j \ln \psi + \ogamma_{ij} \OD^2 \ln \psi \right) \notag \\
+  & + 4 \left(
+  \left( \OD_i \ln \psi \right) \left( \OD_j \ln \psi \right) - \ogamma_{ij} \ogamma^{kl} \left( \OD_k \ln \psi \right)
+  \left( \OD_l \ln \psi \right) \right).
+\end{align}
+
+\subsection{Ricci Scalar}
+
+Ricci Scalar is just a contraction of Ricci tensor:
+\begin{align}\label{eq:ricci-scalar-expand}
+R = & \; \gamma^{ij} R_{ij} = \psi^{-4} \ogamma^{ij} R_{ij} \\
+= & \; \psi^{-4} \ogamma^{ij} \left(
+ \overline{R}_{ij} -2 \left( \OD_i \OD_j \alpha + \ogamma_{ij} \OD^2 \alpha \right) + 4 \left(
+  \OD_i \alpha \OD_j \alpha - \ogamma_{ij} \ogamma^{kl} \OD_k \alpha \OD_l \alpha \right) \right) \\
+= &\; \psi^{-4} \left( \overline{R} - 2 \left( 1 + \ogamma^{ij} \ogamma_{ij} \right) \OD^2 \alpha +
+  4 \left(1 - \ogamma^{ij} \ogamma_{ij} \right) \ogamma^{kl} \OD_k \alpha \OD_l \alpha \right) \\
+= &\; \psi^{-4} \left( \overline{R} - 8 \OD^2 \alpha - 8 \ogamma^{kl} \OD_k \alpha \OD_l \alpha \right) \\
+= &\; \psi^{-4} \left( \overline{R} -
+  8 \ogamma^{kl} \OD_k \OD_l \ln \psi - 8 \ogamma^{kl} \OD_k \left( \ln \psi \right) \OD_l \left( \ln \psi \right) \right)
+\end{align}
+
+It will be useful to work on the second term in isolation
+\begin{align}
+\ogamma^{kl} \OD_k \OD_l \ln \psi = \ogamma^{kl} \OD_k \left( \frac{\OD_l \psi}{\psi} \right) =
+  \ogamma^{kl} \left( -\psi^{-2} \OD_k \psi \OD_l \psi + \psi^{-1} \OD_k \OD_l \psi \right)
+\end{align}
+putting it back into \eqref{eq:ricci-scalar-expand}
+\begin{align}
+R = & \; \psi^{-4} \left( \overline{R} - 8 \psi^{-1} \OD^2 \psi + \cancel{8 \psi^{-2} \ogamma^{kl} \OD_k \psi \OD_l \psi} -
+  \cancel{8 \ogamma^{kl} \OD_k \left( \ln \psi \right) \OD_l \left( \ln \psi \right)} \right) \\
+= & \; \psi^{-4} \overline{R } - 8 \psi^{-5} \OD^2 \psi.
 \end{align}
 
 \end{document}
