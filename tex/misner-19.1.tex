@@ -1,0 +1,101 @@
+\documentclass[aps,prd,preprint]{revtex4-1}
+%\documentclass[aps,prd,final,twocolumn,floats,floatfix,nofootinbib,10pt]{revtex4-1}
+
+% Note:  comment out one of the two documentclass commands, depending
+% on whether you need the final or preprint version. It is most convenient
+% to work in preprint mode, and switch to final only at the end.
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage[english]{babel}
+\usepackage{helvet}
+\usepackage{microtype}
+\usepackage{dsfont}
+\usepackage[pdftex]{hyperref}
+\usepackage{tikz}
+\usepackage[makeroom]{cancel}
+
+\special{papersize=8.5in,11in}
+\setlength{\pdfpageheight}{\paperheight}
+\setlength{\pdfpagewidth}{\paperwidth}
+
+\newcommand{\ogamma}{\overline{\gamma}}
+\newcommand{\OGamma}{\overline{\Gamma}}
+\newcommand{\OD}{\overline{D}}
+
+\begin{document}
+
+\title{19.1  in MTW}
+\author{indutny}
+\date{\today}
+\noaffiliation
+
+\maketitle
+
+\section{Derivation of Metric Far Outside a Weakly Gravitating Body}
+
+\subsection{tt - component}
+
+The trace-reversed stress-energy tensor is defined as:
+\begin{align}
+\bar{T}_{\mu\nu} \equiv T_{\mu\nu} - \frac{1}{2} \eta_{\mu\nu} \eta^{\sigma \rho} T_{\sigma \rho},
+\end{align}
+where
+\begin{align}
+\eta^{\sigma \rho} T_{\sigma \rho} = -T_{00} + T_{ii}.
+\end{align}
+The tt component is:
+\begin{align}
+\bar{T}_{00} = T_{00} - \frac{1}{2} T_{00} + \frac{1}{2} T_{ii} = \frac{1}{2} \left( T_{00} + T_{ii} \right) =
+  \frac{1}{2} \left(T^{00} + T^{ii} \right).
+\end{align}
+
+\begin{align}
+h_{00} & = \int d^3 x' \frac{4 \bar{T}_{00}(t - |x - x'|, x')}{|x - x'|} = \\
+ & = 4 \int d^3 x' \left( \bar{T}_{00}(t - r, x') + \bar{T}_{00, 0} (t - r, x') \left( r - |x - x'| \right) + \cdots \right) \frac{1}{|x - x'|} \\
+ & = 4 \int d^3 x' \left( \bar{T}'_{00} + \bar{T}'_{00, 0} \left( x^j \frac{x'^j}{r} +
+   \frac{1}{2} \frac{x^j x^k}{r} \frac{x'^j x'^k - r'^2 \delta_{jk}}{r^2} + O\left(\frac{1}{r^2}\right) \right) + \cdots \right) \times \notag \\
+   & \left( \frac{1}{r} + \frac{x^l x'^l}{r^3} + O\left( \frac{1}{r^3} \right) \right).
+\end{align}
+
+The term with $\bar{T}'_{00}$ (\emph{no time derivatives}) is:
+\begin{align}\label{eq:n0-tt}
+& \frac{2}{r} \int d^3 x' \left( T^{00} + T^{ii} \right) + \frac{2 x^l}{r^3} \int d^3 x' \left( T^{00} + T^{ii} \right) x'^l +
+  O\left(\frac{1}{r^3} \right).
+\end{align}
+
+Using (19.4b), (19.6a), (19.7a), and (19.7b) from the textbook it becomes:
+\begin{align}
+\eqref{eq:n0-tt} = \frac{2 M}{r} + \frac{1}{r} \int d^3 x' \, T^{00}_{\; \; ,00} r'^2 +
+  \frac{2 x^l}{r^3} \int d^3 x' \, \left( T^{0i} x'^i x'^l - \frac{1}{2} T^{0l} r'^2 \right)_{, 0} +
+  O\left(\frac{1}{r^3} \right) \label{eq:n0-tt-final}.
+\end{align}
+
+The term with $\bar{T}'_{00,0}$ (\emph{first-order time derivative}) is:
+\begin{align}
+& \frac{2}{r^2} \int d^3 x' \left( T^{00} + T^{ii} \right)_{, 0} \left( x^j x'^j + \frac{x^k x^k x'^j x'^k}{r^2} + \frac{1}{2} x^j x^k
+  \frac{x'^j x'^k - r'^2 \delta_{jk}}{r^2} \right) + O\left(\frac{1}{r^3} \right) \\
+  = & \; 2 \int d^3 x' \left( T^{00} + T^{ii} \right)_{, 0} \left( \frac{x^j x'^j}{r^2} + \frac{\left(3 x'^j x'^k - r'^2 \delta_{jk} \right) x^j x^k}{2 r^4} \right) + O\left(\frac{1}{r^3}\right) \label{eq:n1-tt-final}.
+\end{align}
+
+Every term in \eqref{eq:n0-tt-final} and \eqref{eq:n1-tt-final} except for $\frac{2 M}{r}$ is precisely canceled by
+gauge transformation: $\tilde{h}_{00} = h_{00} - 2 \partial_0 \xi_0$.
+
+\subsection{ti - components}
+
+Similarly, we can compute the $n = 0$ term of the $h_{0i}$:
+\begin{align}\label{eq:n0-ti}
+& \frac{4}{r} \int d^3 x' T_{0i} + \frac{4 x^k}{r^3} \int d^3 x' \, T_{0i} x'^k +
+  O\left(\frac{1}{r^3} \right).
+\end{align}
+
+Applying zero momentum (19.4a) condition and using (19.7c) from the textbook:
+\begin{align}
+\eqref{eq:n0-ti} & = -\frac{4 x^k}{r^3} \int d^3 x' \, T^{0i} x'^k + O\left(\frac{1}{r^3} \right) \\
+& = -\frac{2 x^k}{r^3} \int d^3 x' \left( T^{0k}  x'^l - T^{0k} x'^i \right)
+\end{align}
+
+\end{document}
