@@ -25,7 +25,7 @@ fn compute_ddq(rho: f64, z: f64) -> f64 {
     return a * num / den;
 }
 
-fn step(options: &Options, past: &Field, future: &mut Field) -> f64 {
+fn step(options: &Options, past: &Field, future: &mut Field, ddq: &Field) -> f64 {
     let ds = options.scale / (options.size as f64);
     let ds2 = f64::powi(ds, 2);
 
@@ -33,11 +33,6 @@ fn step(options: &Options, past: &Field, future: &mut Field) -> f64 {
     for x in 0..(options.size - 1) {
         for y in 0..(options.size - 1) {
             for z in 0..(options.size - 1) {
-                let coord_rho = (
-                    (x as f64).powi(2) +
-                    (y as f64).powi(2)).sqrt() * ds;
-                let coord_z = (z as f64) * ds;
-
                 let lx = match x { 0 => 1, _ => x - 1 };
                 let ly = match y { 0 => 1, _ => y - 1 };
                 let lz = match z { 0 => 1, _ => z - 1 };
@@ -45,8 +40,7 @@ fn step(options: &Options, past: &Field, future: &mut Field) -> f64 {
                 let ry = y + 1;
                 let rz = z + 1;
 
-                let ddq = compute_ddq(coord_rho, coord_z);
-                let laplacian = -ddq * past[(x, y, z)] / 8.0;
+                let laplacian = -ddq[(x, y, z)] * past[(x, y, z)] / 8.0;
 
                 let new_value = 1.0 / 6.0 * (
                     past[(lx, y, z)] + past[(rx, y, z)] +
@@ -110,25 +104,31 @@ fn compute_mass(options: &Options, field: &Field) -> f64 {
 }
 
 pub fn compute(options: &Options) {
-    let mut field_a = Field::new(options.size);
-    let mut field_b = Field::new(options.size);
+    let mut field_a = Field::new(options.size, 1.0);
+    let mut field_b = Field::new(options.size, 1.0);
+    let mut ddq = Field::new(options.size, 0.0);
 
-    for i in 0..options.size {
-        field_a[(i, options.size - 1, options.size - 1)] = 1.0;
-        field_a[(options.size - 1, i, options.size - 1)] = 1.0;
-        field_a[(options.size - 1, options.size - 1, i)] = 1.0;
-
-        field_b[(i, options.size - 1, options.size - 1)] = 1.0;
-        field_b[(options.size - 1, i, options.size - 1)] = 1.0;
-        field_b[(options.size - 1, options.size - 1, i)] = 1.0;
+    let ds = options.scale / (options.size as f64);
+    for x in 0..options.size {
+        for y in 0..options.size {
+            for z in 0..options.size {
+                let coord_rho = (
+                    (x as f64).powi(2) +
+                    (y as f64).powi(2)).sqrt() * ds;
+                let coord_z = (z as f64) * ds;
+                ddq[(x, y, z)] = compute_ddq(coord_rho, coord_z);
+            }
+        }
     }
 
     for s in 0..10000000 {
-        step(options, &field_a, &mut field_b);
-        let error = step(options, &field_b, &mut field_a);
+        step(options, &field_a, &mut field_b, &ddq);
+        let error = step(options, &field_b, &mut field_a, &ddq);
 
-        println!("s={:?} error={:?} mass={:?}",
-            s, error, compute_mass(options, &field_a));
+        if s % 10 == 0 {
+            println!("s={:?} error={:?} mass={:?}",
+                s, error, compute_mass(options, &field_a));
+        }
     }
 }
 

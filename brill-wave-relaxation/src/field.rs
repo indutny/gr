@@ -7,12 +7,12 @@ pub struct Field {
 }
 
 impl Field {
-    pub fn new(width: usize) -> Self {
+    pub fn new(width: usize, value: f64) -> Self {
         let size: usize = width * width * width;
         let mut values = Vec::with_capacity(size);
 
         for _i in 0..size {
-            values.push(1.0);
+            values.push(value);
         }
 
         Field { width, values }
