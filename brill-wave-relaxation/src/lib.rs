@@ -2,13 +2,22 @@ mod field;
 
 use field::*;
 
+#[derive(Debug)]
 pub struct Options {
+    pub a: f64,
+    pub steps: usize,
+
     pub size: usize,
     pub scale: f64,
 }
 
-fn compute_ddq(rho: f64, z: f64) -> f64 {
-    let a: f64 = 1.0;
+#[derive(Debug)]
+pub struct ComputationResult {
+    pub error: f64,
+    pub mass: f64,
+}
+
+fn compute_ddq(a: f64, rho: f64, z: f64) -> f64 {
     let r = f64::sqrt(f64::powi(rho, 2) + f64::powi(z, 2));
     let num: f64 = 5.0 * f64::powi(rho, 4) * f64::powi(r, 6) -
         45.0 * f64::powi(rho, 4) * r +
@@ -62,7 +71,7 @@ fn compute_mass(options: &Options, field: &Field) -> f64 {
     let ds = options.scale / (options.size as f64);
     let ds3 = f64::powi(ds, 3);
 
-    let boundary = (options.size - 2) as isize;
+    let boundary = (options.size - 1) as isize;
 
     fn constrain(coord: isize) -> usize {
         if coord < 0 {
@@ -73,25 +82,22 @@ fn compute_mass(options: &Options, field: &Field) -> f64 {
     }
 
     let mut m: f64 = 0.0;
-    for x in -boundary..=boundary {
-        for y in -boundary..=boundary {
-            for z in -boundary..=boundary {
+    for x in -boundary..boundary {
+        for y in -boundary..boundary {
+            for z in -boundary..boundary {
                 let cx = constrain(x);
                 let cy = constrain(y);
                 let cz = constrain(z);
                 let rx = constrain(x + 1);
                 let ry = constrain(y + 1);
                 let rz = constrain(z + 1);
-                let lx = constrain(x - 1);
-                let ly = constrain(y - 1);
-                let lz = constrain(z - 1);
 
-                let dpsix = (field[(rx, cy, cz)] - field[(lx, cy, cz)]) /
-                    (2.0 * ds);
-                let dpsiy = (field[(cx, ry, cz)] - field[(cx, ly, cz)]) /
-                    (2.0 * ds);
-                let dpsiz = (field[(cx, cy, rz)] - field[(cx, cy, lz)]) /
-                    (2.0 * ds);
+                let dpsix = (field[(rx, cy, cz)] - field[(cx, cy, cz)]) /
+                    (1.0 * ds);
+                let dpsiy = (field[(cx, ry, cz)] - field[(cx, cy, cz)]) /
+                    (1.0 * ds);
+                let dpsiz = (field[(cx, cy, rz)] - field[(cx, cy, cz)]) /
+                    (1.0 * ds);
 
                 let dpsi2 = dpsix.powi(2) + dpsiy.powi(2) + dpsiz.powi(2);
 
@@ -103,7 +109,7 @@ fn compute_mass(options: &Options, field: &Field) -> f64 {
     return m / (2.0 * std::f64::consts::PI);
 }
 
-pub fn compute(options: &Options) {
+pub fn compute(options: &Options) -> ComputationResult {
     let mut field_a = Field::new(options.size, 1.0);
     let mut field_b = Field::new(options.size, 1.0);
     let mut ddq = Field::new(options.size, 0.0);
@@ -116,19 +122,18 @@ pub fn compute(options: &Options) {
                     (x as f64).powi(2) +
                     (y as f64).powi(2)).sqrt() * ds;
                 let coord_z = (z as f64) * ds;
-                ddq[(x, y, z)] = compute_ddq(coord_rho, coord_z);
+                ddq[(x, y, z)] = compute_ddq(options.a, coord_rho, coord_z);
             }
         }
     }
 
-    for s in 0..10000000 {
+    let mut error = 0.0;
+    for _s in 0..options.steps {
         step(options, &field_a, &mut field_b, &ddq);
-        let error = step(options, &field_b, &mut field_a, &ddq);
-
-        if s % 10 == 0 {
-            println!("s={:?} error={:?} mass={:?}",
-                s, error, compute_mass(options, &field_a));
-        }
+        error = step(options, &field_b, &mut field_a, &ddq);
+    }
+    ComputationResult {
+        error,
+        mass: compute_mass(options, &field_a),
     }
 }
-
