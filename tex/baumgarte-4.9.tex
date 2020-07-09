@@ -1,0 +1,91 @@
+\documentclass[aps,prd,preprint]{revtex4-1}
+%\documentclass[aps,prd,final,twocolumn,floats,floatfix,nofootinbib,10pt]{revtex4-1}
+
+% Note:  comment out one of the two documentclass commands, depending
+% on whether you need the final or preprint version. It is most convenient
+% to work in preprint mode, and switch to final only at the end.
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{mathtools}
+\usepackage[english]{babel}
+\usepackage{helvet}
+\usepackage{microtype}
+\usepackage{dsfont}
+\usepackage[pdftex]{hyperref}
+\usepackage{tikz}
+
+\special{papersize=8.5in,11in}
+\setlength{\pdfpageheight}{\paperheight}
+\setlength{\pdfpagewidth}{\paperwidth}
+
+\begin{document}
+
+\title{4.9 in Baumgarte}
+\author{indutny}
+\date{\today}
+\noaffiliation
+
+\maketitle
+
+\section{4.9}
+
+\subsection{Useful Identities}
+
+\begin{align}
+  \sqrt{-g} = \alpha \sqrt{\gamma},
+\end{align}
+\begin{align}
+  \partial_t \ln |\gamma|^{1 / 2} = -\alpha K + D_i \beta^i,
+\end{align}
+\begin{align}
+  \partial_t K = -D^2 \alpha +
+    \alpha \left( K_{ij} K^{ij} + 4 \pi (\rho + S) \right) +
+    \beta^i D_i K,
+\end{align}
+\begin{align}
+  g^{ab} = \begin{pmatrix}
+    -\alpha^{-2} & \alpha^{-2} \beta^i \\
+    -\alpha^{-2} \beta^j & \gamma^{ij} - \alpha^{-2} \beta^i \beta^j
+  \end{pmatrix}.
+\end{align}
+
+\subsection{Problem statement}
+
+Using
+\begin{align}
+  \prescript{(4)}{} \Gamma^a = -\frac{1}{\sqrt{-g}} \partial_b \left(
+    \sqrt{-g} g^{ab}
+  \right) = 0
+\end{align}
+derive following equalities:
+\begin{align}
+  (\partial_t - \beta^j \partial_j) \alpha & = -\alpha^2 K, \\
+  (\partial_t - \beta^j \partial_j) \beta^i & =
+    - \alpha^2 \left( \gamma^{ij} \partial_j \ln \alpha +
+    \gamma^{jk} \Gamma^i_{jk} \right).
+\end{align}
+
+\subsection{Solution}
+
+Let's rewrite $\prescript{(4)}{} \Gamma^0$ first:
+\begin{align}
+  & -\frac{1}{\alpha \sqrt{\gamma}} \partial_b (
+    \alpha \sqrt{\gamma} g^{0b} ) =
+  - \frac{1}{\alpha \sqrt{\gamma}} \partial_t (
+    \sqrt{\gamma} \alpha^{-1} )
+  - \frac{1}{\alpha \sqrt{\gamma}} \partial_i (
+    \sqrt{\gamma} \alpha^{-1} \beta^i ) \\
+  = &
+    - \left(
+      \alpha^{-2} \partial_t
+      + \alpha^{-2} \beta^i \partial_i \right) \ln \sqrt{\gamma}
+      + \left( \alpha^{-2} \partial_t
+      + \alpha^{-2} \beta^i \partial_i \right) \alpha
+    - \alpha^{-2} \partial_i \beta^i = 0.
+\end{align}
+
+\end{document}
