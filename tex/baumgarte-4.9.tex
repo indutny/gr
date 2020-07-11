@@ -10,6 +10,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{amstext}
+\usepackage{cancel}
 \usepackage{mathtools}
 \usepackage[english]{babel}
 \usepackage{helvet}
@@ -35,18 +36,18 @@
 
 \subsection{Useful Identities}
 
-\begin{align}
+\begin{align} \label{eq:det-rel}
   \sqrt{-g} = \alpha \sqrt{\gamma},
 \end{align}
-\begin{align}
-  \partial_t \ln |\gamma|^{1 / 2} = -\alpha K + D_i \beta^i,
+\begin{align} \label{eq:det-derivative}
+  \partial_t \ln \sqrt{\gamma} = -\alpha K + D_i \beta^i,
 \end{align}
-\begin{align}
+\begin{align} \label{eq:k-derivative}
   \partial_t K = -D^2 \alpha +
     \alpha \left( K_{ij} K^{ij} + 4 \pi (\rho + S) \right) +
     \beta^i D_i K,
 \end{align}
-\begin{align}
+\begin{align} \label{eq:g-upper}
   g^{ab} = \begin{pmatrix}
     -\alpha^{-2} & \alpha^{-2} \beta^i \\
     -\alpha^{-2} \beta^j & \gamma^{ij} - \alpha^{-2} \beta^i \beta^j
@@ -56,36 +57,188 @@
 \subsection{Problem statement}
 
 Using
-\begin{align}
+\begin{align} \label{eq:christoffel-contraction}
   \prescript{(4)}{} \Gamma^a = -\frac{1}{\sqrt{-g}} \partial_b \left(
     \sqrt{-g} g^{ab}
   \right) = 0
 \end{align}
 derive following equalities:
 \begin{align}
-  (\partial_t - \beta^j \partial_j) \alpha & = -\alpha^2 K, \\
+  (\partial_t - \beta^j \partial_j) \alpha & = -\alpha^2 K,
+    \label{eq:first-result}\\
   (\partial_t - \beta^j \partial_j) \beta^i & =
     - \alpha^2 \left( \gamma^{ij} \partial_j \ln \alpha +
-    \gamma^{jk} \Gamma^i_{jk} \right).
+    \gamma^{jk} \Gamma^i_{jk} \right) \label{eq:second-result}.
 \end{align}
 
 \subsection{Solution}
 
-Let's rewrite $\prescript{(4)}{} \Gamma^0$ first:
+It'd be useful to rewrite \eqref{eq:christoffel-contraction} for a
+3-dimensional metric $\gamma$:
+\begin{align} \label{eq:3d-christoffel}
+  \Gamma^i = \gamma^{jk} \Gamma^i_{jk} =
+    -\frac{1}{\sqrt{\gamma}} \partial_j \left(
+      \sqrt{\gamma} \gamma^{ij} \right) =
+    - \gamma^{ij} \partial_j \ln \sqrt{\gamma} - \partial_j \gamma^{ij}.
+\end{align}
+
+First let's rewrite the time component of
+\eqref{eq:christoffel-contraction} using \eqref{eq:g-upper} and
+\eqref{eq:det-rel}:
 \begin{align}
-  & -\frac{1}{\alpha \sqrt{\gamma}} \partial_b (
+  & \frac{1}{\alpha \sqrt{\gamma}} \partial_b (
     \alpha \sqrt{\gamma} g^{0b} ) =
-  - \frac{1}{\alpha \sqrt{\gamma}} \partial_t (
-    \sqrt{\gamma} \alpha^{-1} )
-  - \frac{1}{\alpha \sqrt{\gamma}} \partial_i (
+  \frac{1}{\alpha \sqrt{\gamma}} \partial_t (
+    -\sqrt{\gamma} \alpha^{-1} )
+  + \frac{1}{\alpha \sqrt{\gamma}} \partial_i (
     \sqrt{\gamma} \alpha^{-1} \beta^i ) \\
   = &
     - \left(
       \alpha^{-2} \partial_t
-      + \alpha^{-2} \beta^i \partial_i \right) \ln \sqrt{\gamma}
-      + \left( \alpha^{-2} \partial_t
-      + \alpha^{-2} \beta^i \partial_i \right) \alpha
-    - \alpha^{-2} \partial_i \beta^i = 0.
+      - \alpha^{-2} \beta^i \partial_i \right) \ln \sqrt{\gamma}
+    + \left( \alpha^{-3} \partial_t
+      - \alpha^{-3} \beta^i \partial_i \right) \alpha
+    + \alpha^{-2} \partial_i \beta^i = 0 \\
+  \implies &
+    - \alpha \left(
+      \partial_t
+      - \beta^i \partial_i \right) \ln \sqrt{\gamma}
+    + \left( \partial_t
+      - \beta^i \partial_i \right) \alpha
+    + \alpha \partial_i \beta^i = 0 \label{eq:time-pre-1} \\
+  &
+    \left( \partial_t - \beta^i \partial_i \right) \alpha =
+    \alpha \left(
+      \partial_t
+      - \beta^i \partial_i \right) \ln \sqrt{\gamma}
+    - \alpha \partial_i \beta^i \label{eq:time-1}.
 \end{align}
+
+Plugging \eqref{eq:det-derivative} into \eqref{eq:time-1}:
+\begin{align}
+  \left( \partial_t - \beta^i \partial_i \right) \alpha & =
+    - \alpha^2 K + \alpha \left(
+      D_i \beta^i
+      - \beta^i \partial_i \ln \sqrt{\gamma}
+      - \partial_i \beta^i \right) \\
+  & =
+    - \alpha^2 K + \alpha \gamma^{ij} \left(
+        \partial_i \beta^i + \Gamma^i_{ij} \beta^j
+        - \beta^i \partial_i \ln \sqrt{\gamma}
+        - \partial_i \beta^i \right) \\
+  & =
+    - \alpha^2 K + \alpha \gamma^{ij} \left(
+        \Gamma^i_{ij} \beta^j
+        - \frac{1}{\sqrt{\gamma}}
+          \beta^i \partial_i \sqrt{\gamma} \right) \\
+  & =
+    - \alpha^2 K + \alpha \gamma^{ij} \left(
+        \Gamma^i_{ij} \beta^j
+        - \frac{1}{\sqrt{\gamma}}
+          \beta^i \frac{1}{2 \sqrt{\gamma}}
+          \gamma \gamma^{jk} \partial_i \gamma_{jk} \right) \\
+  & =
+    - \alpha^2 K + \alpha \gamma^{ij} \beta^i \left(
+        \Gamma^j_{ji}
+      - \frac{1}{2} \gamma^{jk} \partial_i \gamma_{jk} \right) \\
+  & =
+    - \alpha^2 K + \alpha \gamma^{ij} \gamma^{jk} \beta^i \frac{1}{2} \left(
+      \bcancel{\gamma_{ki,j}} + \cancel{\gamma_{kj,i}}
+      - \bcancel{\gamma_{ij,k}} - \cancel{\gamma_{jk,i}} \right) \\
+  & = -\alpha^2 K.
+\end{align}
+which is exactly \eqref{eq:first-result}.
+
+For the spatial components of \eqref{eq:christoffel-contraction}:
+\begin{align}
+  \frac{1}{\alpha \sqrt{\gamma}} \partial_b (
+    \alpha \sqrt{\gamma} g^{ib} ) & =
+    \frac{1}{\alpha \sqrt{\gamma}} \partial_t (
+      \alpha \sqrt{\gamma} g^{i0} )
+    + \frac{1}{\alpha \sqrt{\gamma}} \partial_j (
+      \alpha \sqrt{\gamma} g^{ij} ) \\
+  & =
+    \frac{1}{\alpha \sqrt{\gamma}} \partial_t (
+      \alpha^{-1} \sqrt{\gamma} \beta^i )
+    + \frac{1}{\alpha \sqrt{\gamma}} \partial_j \left(
+      \alpha \sqrt{\gamma} \left(
+        \gamma^{ij} - \alpha^{-2} \beta^i \beta^j \right) \right) \\
+  & =
+    \frac{1}{\alpha \sqrt{\gamma}} \partial_t (
+      \alpha^{-1} \sqrt{\gamma} \beta^i )
+    + \frac{1}{\alpha \sqrt{\gamma}} \partial_j \left(
+    \alpha \sqrt{\gamma} \gamma^{ij} \right)
+    - \frac{1}{\alpha \sqrt{\gamma}} \partial_j \left(
+      \alpha^{-1} \sqrt{\gamma} \beta^i \beta^j \right).
+      \label{eq:three-terms}
+\end{align}
+
+Let's work it term by term. First:
+\begin{align}
+  \frac{1}{\alpha \sqrt{\gamma}} \partial_t (
+    \alpha^{-1} \sqrt{\gamma} \beta^i ) & =
+    - \alpha^{-2} \beta^i \partial_t \ln \alpha
+    + \alpha^{-2} \beta^i \partial_t \ln \sqrt{\gamma}
+    + \alpha^{-2} \partial_t \beta^i \notag \\
+  & =
+    \alpha^{-2} \left(
+      - \beta^i \partial_t \ln \alpha
+      + \beta^i \partial_t \ln \sqrt{\gamma}
+      + \partial_t \beta^i \right) \label{eq:first-term},
+\end{align}
+the second:
+\begin{align}
+  \frac{1}{\alpha \sqrt{\gamma}} \partial_j \left(
+    \alpha \sqrt{\gamma} \gamma^{ij} \right) =
+    \gamma^{ij} \partial_j \ln \alpha
+    + \gamma^{ij} \partial_j \ln \sqrt{\gamma}
+    + \partial_j \gamma^{ij} \label{eq:second-term},
+\end{align}
+and the third:
+\begin{align}
+  \frac{1}{\alpha \sqrt{\gamma}} \partial_j \left(
+    \alpha^{-1} \sqrt{\gamma} \beta^i \beta^j \right) & =
+    - \alpha^{-2} \beta^i \beta^j \partial_j \ln \alpha
+    + \alpha^{-2} \beta^i \beta^j \partial_j \ln \sqrt{\gamma}
+    + \alpha^{-2} \beta^j \partial_j \beta^i
+    + \alpha^{-2} \beta^i \partial_j \beta^j \notag \\
+  & =
+    \alpha^{-2} \left(
+      - \beta^i \beta^j \partial_j \ln \alpha
+      + \beta^i \beta^j \partial_j \ln \sqrt{\gamma}
+      + \beta^j \partial_j \beta^i
+      + \beta^i \partial_j \beta^j \right) \label{eq:third-term}.
+\end{align}
+
+Combining \eqref{eq:first-term}, \eqref{eq:second-term},
+\eqref{eq:third-term}:
+\begin{align}
+  \eqref{eq:three-terms} & = \alpha^{-2} \left(
+    - \beta^i \left( \partial_t - \beta^j \partial_j \right) \ln \alpha
+    + \beta^i \left(\partial_t - \beta^j \partial_j \right)
+      \ln \sqrt{\gamma}
+      + \left( \partial_t - \beta^j \partial_j \right) \beta^i
+    - \beta^i \partial_j \beta^j \right) \notag \\
+  & +
+    \gamma^{ij} \partial_j \ln \alpha
+    + \gamma^{ij} \partial_j \ln \sqrt{\gamma}
+    + \partial_j \gamma^{ij} \label{eq:first-interim-1}.
+\end{align}
+We can use \eqref{eq:time-pre-1} to simplify further:
+\begin{align}
+  \alpha^2 \eqref{eq:first-interim-1} =
+    \left( \partial_t - \beta^j \partial_j \right) \beta^i
+    + \alpha^2 \left( \gamma^{ij} \partial_j \ln \alpha
+      + \gamma^{ij} \partial_j \ln \sqrt{\gamma}
+      + \partial_j \gamma^{ij} \right) = 0
+\end{align}
+and using \eqref{eq:3d-christoffel}:
+\begin{align}
+  \left( \partial_t - \beta^j \partial_j \right) \beta^i =
+  - \alpha^2 \left(
+    \gamma^{ij} \partial_j \ln \alpha
+  - \Gamma^i \right)
+\end{align}
+which is \eqref{eq:second-result} up to a pesky sign.
 
 \end{document}
